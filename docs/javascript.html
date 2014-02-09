@@ -15,8 +15,13 @@ lead: "Bring Bootstrap's components to life with over a dozen custom jQuery plug
   <p>Plugins can be included individually (using Bootstrap's individual <code>*.js</code> files), or all at once (using <code>bootstrap.js</code> or the minified <code>bootstrap.min.js</code>).</p>
 
   <div class="bs-callout bs-callout-danger">
-    <h4>Do not attempt to include both.</h4>
-    <p>Both <code>bootstrap.js</code> and <code>bootstrap.min.js</code> contain all plugins in a single file.</p>
+    <h4>Using the compiled JavaScript</h4>
+    <p>Both <code>bootstrap.js</code> and <code>bootstrap.min.js</code> contain all plugins in a single file. Include only one.</p>
+  </div>
+
+  <div class="bs-callout bs-callout-danger">
+    <h4>Component data attributes</h4>
+    <p>Don't mix data attributes from separate plugins on the same component. For example, a button cannot have a tooltip and toggle a modal. To accomplish this, use a wrapping element.</p>
   </div>
 
   <div class="bs-callout bs-callout-danger">
@@ -342,7 +347,7 @@ $('#myModal').on('show.bs.modal', function (e) {
          <td>remote</td>
          <td>path</td>
          <td>false</td>
-         <td><p>If a remote URL is provided, <strong>content will be loaded one time</strong> via jQuery's <code>load</code> method and injected into the root of the modal element. If you're using the data-api, you may alternatively use the <code>href</code> attribute to specify the remote source. An example of this is shown below:</p>
+         <td><p>If a remote URL is provided, <strong>content will be loaded one time</strong> via jQuery's <code>load</code> method and injected into the <code>.modal-content</code> div. If you're using the data-api, you may alternatively use the <code>href</code> attribute to specify the remote source. An example of this is shown below:</p>
 {% highlight html %}
 <a data-toggle="modal" href="remote.html" data-target="#modal">Click me</a>
 {% endhighlight %}
@@ -548,6 +553,10 @@ $('#myModal').on('hidden.bs.modal', function (e) {
 {% highlight js %}
 $('.dropdown-toggle').dropdown()
 {% endhighlight %}
+  <div class="bs-callout bs-callout-info">
+    <h4><code>data-toggle="dropdown"</code> still required</h4>
+    <p>Regardless of whether you call your dropdown via JavaScript or instead use the data-api, <code>data-toggle="dropdown"</code> is always required to be present on the dropdown's trigger element.</p>
+  </div>
 
   <h3>Options</h3>
   <p><em>None</em></p>
@@ -557,6 +566,7 @@ $('.dropdown-toggle').dropdown()
   <p>Toggles the dropdown menu of a given navbar or tabbed navigation.</p>
 
   <h3>Events</h3>
+  <p>All dropdown events are fired at the <code>.dropdown-menu</code>'s parent element.</p>
   <div class="table-responsive">
     <table class="table table-bordered table-striped">
       <thead>
@@ -941,12 +951,12 @@ $('#example').tooltip(options)
   </div>
 {% highlight html linenos %}
 <!-- HTML to write -->
-<a href="#" data-toggle="tooltip" title="first tooltip">Hover over me</a>
+<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 
 <!-- Generated markup by the plugin -->
 <div class="tooltip top">
   <div class="tooltip-inner">
-    Tooltip!
+    Some tooltip text!
   </div>
   <div class="tooltip-arrow"></div>
 </div>
@@ -1434,10 +1444,10 @@ $('#my-alert').bind('closed.bs.alert', function () {
 </button>
 <script>
   $('#loading-example-btn').click(function () {
-    var btn = $(this);
-    btn.button('loading');
+    var btn = $(this)
+    btn.button('loading')
     $.ajax(...).always(function () {
-      btn.button('reset');
+      btn.button('reset')
     });
   });
 </script>
@@ -1542,10 +1552,10 @@ $('.btn').button()
 <button id="loading-example-btn" type="button" class="btn btn-primary" data-loading-text="loading stuff...">...</button>
 <script>
   $('#loading-example-btn').click(function () {
-    var btn = $(this);
-    btn.button('loading');
+    var btn = $(this)
+    btn.button('loading')
     $.ajax(...).always(function () {
-      btn.button('reset');
+      btn.button('reset')
     });
   });
 </script>
@@ -1923,6 +1933,9 @@ $('#myCollapsible').on('hidden.bs.collapse', function () {
 
   <h2 id="carousel-usage">Usage</h2>
 
+  <h3>Multiple carousels</h3>
+  <p>Carousels require the use of an <code>id</code> on the outermost container, <code>.carousel</code>, for carousel controls to function properly. When adding multiple carousels, or when changing a carousel's <code>id</code>, be sure to update the relevant controls.</p>
+
   <h3>Via data attributes</h3>
   <p>Use data attributes to easily control the position of the carousel. <code>data-slide</code> accepts the keywords <code>prev</code> or <code>next</code>, which alters the slide position relative to its current position. Alternatively, use <code>data-slide-to</code> to pass a raw slide index to the carousel <code>data-slide-to="2"</code>, which shifts the slide position to a particular index beginning with <code>0</code>.</p>
   <p>The <code>data-ride="carousel"</code> attribute is used to mark a carousel as animating starting at page load.</p>
@@ -2031,7 +2044,7 @@ $('#myCarousel').on('slide.bs.carousel', function () {
   <h1 id="affix" class="page-header">Affix <small>affix.js</small></h1>
 
   <h2 id="affix-examples">Example</h2>
-  <p>The subnavigation on the left is a live demo of the affix plugin.</p>
+  <p>The subnavigation on the right is a live demo of the affix plugin.</p>
 
   <hr class="bs-docs-separator">
 
